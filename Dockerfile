@@ -25,8 +25,6 @@ RUN export EDITOR=vi
 
 # Shells
 RUN yum -y install zsh
-RUN chsh -s /bin/zsh
-RUN wget --no-check-certificate http://install.ohmyz.sh -O - | sh
 
 # Revision Control
 RUN yum -y install git
@@ -44,6 +42,7 @@ RUN git config --global merge.stat true
 # node
 RUN cd /usr/local/src && wget http://nodejs.org/dist/v0.10.29/node-v0.10.29-linux-x64.tar.gz \
 	&& tar -xvvf node-* && rm node-v0.10.29-linux-x64.tar.gz
+RUN ln -s /usr/local/bin/node /usr/src/node-v10.29/bin/node
 RUN cd /usr/local/src && curl -L http://npmjs.org/install.sh | sh
 RUN npm install -g grunt-cli jshint jslint less coffee-script
 
@@ -61,6 +60,9 @@ RUN chown -R application /usr/src/
 RUN chown -R application /usr/lib/
 RUN chown -R application /usr/bin/
 RUN chown -R application /src
+RUN su application -c chsh -s /bin/zsh
+RUN su application -c cd /usr/local/application \
+	&& wget --no-check-certificate http://install.ohmyz.sh -O - | sh
 
 # Puppet
 
