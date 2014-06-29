@@ -64,14 +64,14 @@ RUN chown -R application /src
 
 # Puppet
 
-RUN /usr/sbin/useradd --create-home --home-dir /usr/local/application --shell /bin/bash -g application -p $(echo "technology" | openssl passwd -1 -stdin) -U puppet
+RUN /usr/sbin/useradd --create-home --home-dir /usr/local/puppet --shell /bin/bash -g application puppet
 RUN yum -y install puppet
-RUN echo "%puppet ALL=NOPASSWD: ALL" >> /etc/sudoers
+#RUN echo "%puppet ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 # Monit
-RUN /usr/sbin/useradd --create-home --home-dir /usr/local/application --shell /bin/bash -g application -p $(echo "technology" | openssl passwd -1 -stdin) -U puppet
+RUN /usr/sbin/useradd --create-home --home-dir /usr/local/monit --shell /bin/bash -g application monit
 RUN yum -y install monit
-RUN echo "%monit ALL=NOPASSWD: ALL" >> /etc/sudoers
+#RUN echo "%monit ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 # Cleanup
 RUN yum -y clean all
